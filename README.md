@@ -1,3 +1,3 @@
 Proyecto evaluacion final.
-Robótica.
+Robótica y automatización.
 Fredy Bohle.
