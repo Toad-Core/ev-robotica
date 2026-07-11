@@ -38,6 +38,8 @@ client.on('connect', () => {
     client.subscribe('proyectoFinal/sala_servidores/estado/modo');
     client.subscribe('proyectoFinal/sala_servidores/estado/conexion');
     client.subscribe('proyectoFinal/sala_servidores/eventos/alertas');
+    client.subscribe('proyectoFinal/sala_servidores/config/umbral_temperatura');
+    client.subscribe('proyectoFinal/sala_servidores/config/umbral_humedad');
 });
 
 // Recepción de mensajes para actualizar información
@@ -85,6 +87,13 @@ client.on('message', (topic, message) => {
             document.getElementById('val-hum').textContent = '-- %';
             document.getElementById('val-modo').textContent = '--';
         }
+    }
+    else if (topic === 'proyectoFinal/sala_servidores/config/umbral_temperatura') {
+        document.getElementById('input-umbral-temperatura').value = msgStr;
+    }
+    //
+    else if (topic === 'proyectoFinal/sala_servidores/config/umbral_humedad') {
+        document.getElementById('input-umbral-humedad').value = msgStr;
     }
 });
 

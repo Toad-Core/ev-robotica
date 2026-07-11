@@ -191,7 +191,7 @@ void loop() {
     // ventilador encendido: LED azul
     // ventilador apagado: LED rojo
     if (modo_automatico) {
-      if (temperatura > umbral_temperatura || humedad > umbral_humedad ) {
+      if (temperatura > umbral_temperatura) {
         // Enciende "ventilador" 
         digitalWrite(PIN_AZUL, HIGH);
         digitalWrite(PIN_ROJO, LOW);
@@ -201,7 +201,17 @@ void loop() {
           client.publish("proyectoFinal/sala_servidores/eventos/alertas", "ALERTA: Temperatura demasiado alta. VENTILADOR ENCENDIDO.");
           ventilador_encendido = true;
         }
-      } else {
+      } else if (humedad > umbral_humedad){
+        // Enciende "ventilador" 
+        digitalWrite(PIN_AZUL, HIGH);
+        digitalWrite(PIN_ROJO, LOW);
+        digitalWrite(PIN_VERDE, LOW);
+        if (!ventilador_encendido) {
+          client.publish("proyectoFinal/sala_servidores/estado/ventilador", "ON", true);
+          client.publish("proyectoFinal/sala_servidores/eventos/alertas", "ALERTA: Humedad demasiado alta. VENTILADOR ENCENDIDO.");
+          ventilador_encendido = true;
+        }
+      }else {
         // Apaga "ventilador" 
         digitalWrite(PIN_AZUL, LOW);
         digitalWrite(PIN_ROJO, HIGH);
